@@ -53,8 +53,8 @@ class FragmentScan : Fragment() {
     private lateinit var barcodeScanner: BarcodeScanner
     private lateinit var dbHelper: HistoryDB
     private val GEOFENCE_RADIUS = 100f
-    private val GEOFENCE_LATITUDE = -6.321943709730052
-    private val GEOFENCE_LONGITUDE =  106.89917848650674
+    private val GEOFENCE_LATITUDE = -6.342398724967215
+    private val GEOFENCE_LONGITUDE =  106.87057313667201
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -229,12 +229,24 @@ class FragmentScan : Fragment() {
     private fun handleBarcode(barcode: Barcode) {
         val url = barcode.url?.url ?: barcode.displayValue
         if (url != null) {
+            // Get the current time in "HH:mm" format
+            val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+
+            // Determine if it's after 6:30 AM
+            val keterangan = if (currentTime > "06:30") {
+                "Terlambat" // If after 6:30 AM, attendance is considered late
+            } else {
+                "Hadir" // If before 6:30 AM, attendance is on time
+            }
+
+            // Start the PhotoCaptureActivity with the appropriate keterangan
             val intent = Intent(context, PhotoCaptureActivity::class.java)
             intent.putExtra("qr_data", url)
-            intent.putExtra("keterangan", "Hadir")
+            intent.putExtra("keterangan", keterangan)
             startActivity(intent)
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
