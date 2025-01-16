@@ -17,6 +17,7 @@
         android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -28,6 +29,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RecodeApplication"
         tools:targetApi="31">
+        <activity
+            android:name=".NoteStudentMain"
+            android:exported="false" />
         <activity
             android:name=".UpdateNoteStudentActivity"
             android:exported="false" />

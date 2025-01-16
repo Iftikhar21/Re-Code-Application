@@ -135,7 +135,7 @@ class FragmentHome : Fragment() {
 
         val btnAddNote = view.findViewById<FloatingActionButton>(R.id.addNote)
         btnAddNote.setOnClickListener {
-            val intent = Intent(requireActivity(), AddNoteActivity::class.java)
+            val intent = Intent(requireActivity(), NoteStudentMain::class.java)
             startActivity(intent)
         }
 

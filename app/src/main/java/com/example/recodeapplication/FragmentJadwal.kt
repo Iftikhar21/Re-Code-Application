@@ -45,7 +45,7 @@ class FragmentJadwal : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_jadwal, container, false)
-        recycleNote = view.findViewById(R.id.noteRecycle)
+//        recycleNote = view.findViewById(R.id.noteRecycle)
 
         val btnOpenDrive: Button = view.findViewById(R.id.btnOpenDrive)
 
@@ -53,21 +53,25 @@ class FragmentJadwal : Fragment() {
             openGoogleDrive()
         }
 
-        db = DBHelper(requireContext())
-        noteStudentAdapter = NotesStudentAdapter(db.getAllNotes(), requireContext())
-        recycleNote.layoutManager = LinearLayoutManager(requireContext())
-        recycleNote.adapter = noteStudentAdapter
-
-
+//        db = DBHelper(requireContext())
+//        noteStudentAdapter = NotesStudentAdapter(db.getAllNotes(), requireContext())
+//        recycleNote.layoutManager = LinearLayoutManager(requireContext())
+//        recycleNote.adapter = noteStudentAdapter
+//
+        val btnOpenNote: Button = view.findViewById(R.id.btnOpenNote)
+        btnOpenNote.setOnClickListener {
+            val intent = Intent(requireActivity(), NoteStudentMain::class.java)
+            startActivity(intent)
+        }
 
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-        noteStudentAdapter.refreshData(db.getAllNotes())
-        Log.d("FragmentJadwal", "Notes refreshed with ${db.getAllNotes().size} items.")
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        noteStudentAdapter.refreshData(db.getAllNotes())
+//        Log.d("FragmentJadwal", "Notes refreshed with ${db.getAllNotes().size} items.")
+//    }
 
 
     private fun openGoogleDrive() {

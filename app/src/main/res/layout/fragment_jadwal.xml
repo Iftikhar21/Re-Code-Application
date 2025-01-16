@@ -63,11 +63,64 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardViewSchedule">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvNoteTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:paddingBottom="8dp"
+                    android:text="History Catatan"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvNoteDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Daftar Catatanmu"
+                    android:textColor="@color/ijoo"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btnOpenNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/btn_jadwal"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Buka Catatan"
+                    android:textColor="@android:color/white"
+                    app:backgroundTint="@null"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardViewSchedule" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/noteRecycle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewSchedule" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

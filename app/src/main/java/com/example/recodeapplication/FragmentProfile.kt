@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import java.io.File
 
 class FragmentProfile : Fragment() {
 
@@ -96,28 +97,55 @@ class FragmentProfile : Fragment() {
             result.data?.data?.let { uri ->
                 Log.d("FragmentProfile", "Selected URI: $uri")
 
-                val photoItem = PhotoItem(uri = uri.toString())
-                val dbHelper = DBHelper(requireContext())
-                val isInserted = dbHelper.insertPhoto(photoItem)
+                val savedPath = saveImageToAppStorage(uri)
+                if (savedPath != null) {
+                    Log.d("FragmentProfile", "Saved image path: $savedPath")
 
-                if (isInserted) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Foto berhasil disimpan ke database",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    // Tampilkan foto yang baru saja dipilih
-                    view?.findViewById<ImageView>(R.id.viewPhoto)?.setImageURI(uri)
+                    val photoItem = PhotoItem(uri = savedPath)
+                    val dbHelper = DBHelper(requireContext())
+                    val isInserted = dbHelper.insertPhoto(photoItem)
+
+                    if (isInserted) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Foto berhasil disimpan ke database",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        // Tampilkan foto yang baru saja disimpan
+                        view?.findViewById<ImageView>(R.id.viewPhoto)?.setImageURI(Uri.fromFile(File(savedPath)))
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Gagal menyimpan foto ke database",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Gagal menyimpan foto ke database",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(), "Gagal menyimpan foto", Toast.LENGTH_SHORT).show()
                 }
             } ?: Log.e("FragmentProfile", "URI is null")
         } else {
             Log.e("FragmentProfile", "Result Code: ${result.resultCode}")
+        }
+    }
+
+    // Menyimpan gambar ke penyimpanan internal aplikasi
+    private fun saveImageToAppStorage(uri: Uri): String? {
+        return try {
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            val fileName = "profile_${System.currentTimeMillis()}.jpg"
+            val file = File(requireContext().filesDir, fileName)
+
+            inputStream?.use { input ->
+                file.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            file.absolutePath // Kembalikan path file yang tersimpan
+        } catch (e: Exception) {
+            Log.e("FragmentProfile", "Error saving image: ${e.message}")
+            null
         }
     }
 
@@ -129,7 +157,7 @@ class FragmentProfile : Fragment() {
         if (photos.isNotEmpty()) {
             val firstPhotoUri = photos.last().uri // Menampilkan foto terbaru
             try {
-                viewPhoto.setImageURI(Uri.parse(firstPhotoUri))
+                viewPhoto.setImageURI(Uri.fromFile(File(firstPhotoUri)))
             } catch (e: Exception) {
                 Log.e("FragmentProfile", "Error displaying photo: ${e.message}")
                 Toast.makeText(requireContext(), "Gagal memuat foto", Toast.LENGTH_SHORT).show()
