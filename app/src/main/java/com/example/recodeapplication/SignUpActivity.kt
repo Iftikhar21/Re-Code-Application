@@ -40,7 +40,7 @@ class SignUpActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "Sign-Up Successful!", Toast.LENGTH_SHORT).show()
 
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, SplashActivity::class.java))
                     finish()
                 } else {
 
