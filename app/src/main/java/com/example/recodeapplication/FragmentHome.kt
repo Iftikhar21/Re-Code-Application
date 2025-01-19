@@ -144,7 +144,7 @@ class FragmentHome : Fragment() {
 
     private fun updateAttendanceStatus() {
         // Get today's date in the format "EEE, dd MMMM yyyy" to match your display format
-        val currentDate = SimpleDateFormat("EEE, dd MMMM yyyy", Locale.getDefault()).format(Date())
+        val currentDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date())
         val hasAttendanceToday = hasAttendanceForDate(currentDate)
         tvNoAttendance.visibility = if (hasAttendanceToday) View.GONE else View.VISIBLE
     }
