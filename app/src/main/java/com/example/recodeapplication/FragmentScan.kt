@@ -228,22 +228,22 @@ class FragmentScan : Fragment() {
 
     private fun handleBarcode(barcode: Barcode) {
         val url = barcode.url?.url ?: barcode.displayValue
-        if (url != null) {
-            // Get the current time in "HH:mm" format
+        if (url != null && url.contains("https://qrfy.io/HSOSfhMV1j")) {
+            
             val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
-
-            // Determine if it's after 6:30 AM
+            
             val keterangan = if (currentTime > "06:30") {
-                "Terlambat" // If after 6:30 AM, attendance is considered late
+                "Terlambat"
             } else {
-                "Hadir" // If before 6:30 AM, attendance is on time
+                "Hadir"
             }
 
-            // Start the PhotoCaptureActivity with the appropriate keterangan
             val intent = Intent(context, PhotoCaptureActivity::class.java)
             intent.putExtra("qr_data", url)
             intent.putExtra("keterangan", keterangan)
             startActivity(intent)
+        } else {
+            Toast.makeText(context, "QR code tidak valid untuk absensi.", Toast.LENGTH_SHORT).show()
         }
     }
 
