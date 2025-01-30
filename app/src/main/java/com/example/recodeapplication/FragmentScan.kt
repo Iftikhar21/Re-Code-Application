@@ -27,6 +27,9 @@ import com.google.android.gms.location.LocationServices
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.widget.Button
 import androidx.camera.core.*
 import java.text.SimpleDateFormat
@@ -53,8 +56,9 @@ class FragmentScan : Fragment() {
     private lateinit var barcodeScanner: BarcodeScanner
     private lateinit var dbHelper: HistoryDB
     private val GEOFENCE_RADIUS = 100f
-    private val GEOFENCE_LATITUDE = -6.321943709730052
-    private val GEOFENCE_LONGITUDE =  106.89917848650674
+    private val GEOFENCE_LATITUDE = -6.321671788056216
+    private val GEOFENCE_LONGITUDE =  106.8992106730176
+    private val scanResetHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,17 +92,17 @@ class FragmentScan : Fragment() {
             }
         }
 
-        view.findViewById<Button>(R.id.btnIzin).setOnClickListener {
-            val intent = Intent(context, PhotoCaptureActivity::class.java)
-            intent.putExtra("keterangan", "Izin")
-            startActivity(intent)
-        }
-
-        view.findViewById<Button>(R.id.btnSakit).setOnClickListener {
-            val intent = Intent(context, PhotoCaptureActivity::class.java)
-            intent.putExtra("keterangan", "Sakit")
-            startActivity(intent)
-        }
+//        view.findViewById<Button>(R.id.btnIzin).setOnClickListener {
+//            val intent = Intent(context, PhotoCaptureActivity::class.java)
+//            intent.putExtra("keterangan", "Izin")
+//            startActivity(intent)
+//        }
+//
+//        view.findViewById<Button>(R.id.btnSakit).setOnClickListener {
+//            val intent = Intent(context, PhotoCaptureActivity::class.java)
+//            intent.putExtra("keterangan", "Sakit")
+//            startActivity(intent)
+//        }
 
         requestPermissionLauncher.launch(
             arrayOf(
@@ -228,24 +232,31 @@ class FragmentScan : Fragment() {
 
     private fun handleBarcode(barcode: Barcode) {
         val url = barcode.url?.url ?: barcode.displayValue
-        if (url != null && url.contains("https://qrfy.io/HSOSfhMV1j")) {
-            
+        if (url != null && url.contains("https://qr.me-qr.com/p4tfV5Mx")) {
+            // Get the current time in "HH:mm" format
             val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
-            
+
+            // Determine if it's after 6:30 AM
             val keterangan = if (currentTime > "06:30") {
-                "Terlambat"
+                "Terlambat" // If after 6:30 AM, attendance is considered late
             } else {
-                "Hadir"
+                "Hadir" // If before 6:30 AM, attendance is on time
             }
 
+            // Start the PhotoCaptureActivity with the appropriate keterangan
             val intent = Intent(context, PhotoCaptureActivity::class.java)
             intent.putExtra("qr_data", url)
             intent.putExtra("keterangan", keterangan)
             startActivity(intent)
         } else {
+            // Handle invalid QR code or display an error message
+            Log.e("QR Scan", "Invalid QR code URL: $url")
             Toast.makeText(context, "QR code tidak valid untuk absensi.", Toast.LENGTH_SHORT).show()
+            scanResetHandler.postDelayed({ hasScanned = false }, 3000)
         }
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
