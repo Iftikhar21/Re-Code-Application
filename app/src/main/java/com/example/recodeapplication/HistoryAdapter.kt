@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 
 class HistoryAdapter(
     private val historyList: MutableList<HistoryItem>,
-    private val deleteHistoryItem: (Long) -> Unit
+//    private val deleteHistoryItem: (Long) -> Unit
 ) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,7 +19,7 @@ class HistoryAdapter(
         val textEmail3: TextView = itemView.findViewById(R.id.textEmail3)
         val textPanggilan: TextView = itemView.findViewById(R.id.textPanggilan)
         val moodImage: ImageView = itemView.findViewById(R.id.imageView6)
-        val deleteBtn: ImageView = itemView.findViewById(R.id.deleteBtn)
+//        val deleteBtn: ImageView = itemView.findViewById(R.id.deleteBtn)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -47,10 +47,10 @@ class HistoryAdapter(
         }
         holder.moodImage.setImageResource(moodEmoji)
 
-        holder.deleteBtn.setOnClickListener {
-            deleteHistoryItem(history.id)
-            notifyItemRemoved(position)
-        }
+//        holder.deleteBtn.setOnClickListener {
+//            deleteHistoryItem(history.id)
+//            notifyItemRemoved(position)
+//        }
     }
 
     override fun getItemCount(): Int = historyList.size

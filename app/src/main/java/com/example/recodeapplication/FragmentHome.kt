@@ -120,7 +120,6 @@ class FragmentHome : Fragment() {
             db.deleteHistoryItem(id)
             historyList.removeIf { it.id == id }
             historyAdapter.notifyDataSetChanged()
-            // Update attendance status after deletion
             updateAttendanceStatus()
         }
 

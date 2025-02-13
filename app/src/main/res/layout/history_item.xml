@@ -90,24 +90,12 @@
             app:layout_constraintStart_toStartOf="@+id/textEmail"
             app:layout_constraintTop_toBottomOf="@+id/textEmail" />
 
-        <ImageButton
-            android:id="@+id/deleteBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="#00FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textNama"
-            app:srcCompat="@drawable/baseline_delete_24" />
-
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="@+id/deleteBtn"
-            app:layout_constraintStart_toStartOf="@+id/deleteBtn"
-            app:layout_constraintTop_toBottomOf="@+id/deleteBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/good" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

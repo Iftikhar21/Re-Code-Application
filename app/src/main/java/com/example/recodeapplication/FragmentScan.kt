@@ -56,8 +56,8 @@ class FragmentScan : Fragment() {
     private lateinit var barcodeScanner: BarcodeScanner
     private lateinit var dbHelper: HistoryDB
     private val GEOFENCE_RADIUS = 100f
-    private val GEOFENCE_LATITUDE = -6.321671788056216
-    private val GEOFENCE_LONGITUDE =  106.8992106730176
+    private val GEOFENCE_LATITUDE = -6.321957808012581
+    private val GEOFENCE_LONGITUDE =  106.89969622477079
     private val scanResetHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
