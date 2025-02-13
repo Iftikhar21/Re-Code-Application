@@ -43,7 +43,7 @@
             android:exported="false" />
         <activity
             android:name=".MoodDialog"
-            android:exported="false" /> <!-- Activity declarations -->
+            android:exported="false" />
         <activity
             android:name=".NoteActivity"
             android:exported="false" />
@@ -65,6 +65,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".FullscreenImageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true">

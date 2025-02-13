@@ -1,10 +1,12 @@
 package com.example.recodeapplication
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -32,7 +34,7 @@ class HistoryAdapter(
         val history = historyList[position]
 
         Glide.with(holder.itemView.context)
-                .load(history.photoPath)
+            .load(history.photoPath)
             .into(holder.fotoContainer)
 
         holder.textNama.text = "${history.date}, ${history.time}"
@@ -47,6 +49,12 @@ class HistoryAdapter(
         }
         holder.moodImage.setImageResource(moodEmoji)
 
+        holder.fotoContainer.setOnClickListener {
+            val intent = Intent(holder.itemView.context, FullscreenImageActivity::class.java)
+            intent.putExtra("IMAGE_URL", history.photoPath)
+            holder.itemView.context.startActivity(intent)
+        }
+
 //        holder.deleteBtn.setOnClickListener {
 //            deleteHistoryItem(history.id)
 //            notifyItemRemoved(position)
@@ -55,4 +63,3 @@ class HistoryAdapter(
 
     override fun getItemCount(): Int = historyList.size
 }
-
