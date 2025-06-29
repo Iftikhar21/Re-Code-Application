@@ -112,15 +112,14 @@ class FragmentHome : Fragment() {
 
         db = HistoryDB(requireContext())
 
-        historyList = loadHistoryItems()
+        val today = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date())
+        historyList = loadHistoryItems().filter { it.date == today }.toMutableList()
 
         updateAttendanceStatus()
 
         historyAdapter = HistoryHomeAdapter(historyList) { id ->
-            db.deleteHistoryItem(id)
-            historyList.removeIf { it.id == id }
+            // Hanya refresh tampilan jika ingin
             historyAdapter.notifyDataSetChanged()
-            updateAttendanceStatus()
         }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -142,20 +141,21 @@ class FragmentHome : Fragment() {
     }
 
     private fun updateAttendanceStatus() {
-        tvNoAttendance.visibility = if (historyList.isNotEmpty()) View.GONE else View.VISIBLE
+        val currentDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date())
+        val hasAttendanceToday = hasAttendanceForDate(currentDate)
+        tvNoAttendance.visibility = if (hasAttendanceToday) View.GONE else View.VISIBLE
     }
 
-//    private fun hasAttendanceForDate(currentDate: String): Boolean {
-//        return historyList.any { historyItem ->
-//            // Compare the dates directly if they're in the same format
-//            // Assuming historyItem.date is in the same format as currentDate
-//            historyItem.date == currentDate
-//        }
-//    }
+    private fun hasAttendanceForDate(currentDate: String): Boolean {
+        return historyList.any { historyItem ->
+            // Compare the dates directly if they're in the same format
+            // Assuming historyItem.date is in the same format as currentDate
+            historyItem.date == currentDate
+        }
+    }
 
     private fun loadHistoryItems(): MutableList<HistoryItem> {
-        val currentDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date())
-        return db.getAllHistory().filter { it.date == currentDate }.toMutableList()
+        return db.getAllHistory().toMutableList()
     }
 
     private fun displayPhotos(viewPhoto: ImageView) {
@@ -163,7 +163,7 @@ class FragmentHome : Fragment() {
         val photos = dbHelper.getAllPhotos()
 
         if (photos.isNotEmpty()) {
-            val firstPhotoUri = photos.last().uri
+            val firstPhotoUri = photos.last().uri // Menampilkan foto terbaru
             try {
                 viewPhoto.setImageURI(Uri.parse(firstPhotoUri))
             } catch (e: Exception) {
@@ -209,7 +209,7 @@ class FragmentHome : Fragment() {
                 val geocoder = Geocoder(requireContext(), Locale.getDefault())
                 val addresses = geocoder.getFromLocation(latitude, longitude, 1)
                 if (addresses != null && addresses.isNotEmpty()) {
-                    val address = addresses[0].getAddressLine(0)
+                    val address = addresses[0].getAddressLine(0) // Nama lokasi lengkap
                     tvLocation.text = "Lokasi: $address"
                 } else {
                     tvLocation.text = "Tidak dapat menemukan nama lokasi."

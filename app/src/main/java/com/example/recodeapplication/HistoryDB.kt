@@ -89,6 +89,53 @@ class HistoryDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         return historyList
     }
 
+//    fun getRecentHistory(): List<HistoryItem> {
+//        val historyList = mutableListOf<HistoryItem>()
+//        val db = readableDatabase
+//
+//        val dateFormatDB = SimpleDateFormat("d MMMM yyyy", Locale("id", "ID")) // Format di database
+//        val dateFormatQuery = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) // Format yang dibutuhkan SQL
+//
+//        val today = dateFormatQuery.format(Date())
+//
+//        val calendar = java.util.Calendar.getInstance()
+//        calendar.time = Date()
+//        calendar.add(java.util.Calendar.DAY_OF_YEAR, -30)
+//        val pastDate = dateFormatQuery.format(calendar.time)
+//
+//        // Konversi tanggal dari database ke format yyyy-MM-dd
+//        val query = "SELECT * FROM $TABLE_HISTORY ORDER BY $COLUMN_DATE DESC"
+//        val cursor: Cursor = db.rawQuery(query, null)
+//
+//        while (cursor.moveToNext()) {
+//            val id = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID))
+//            val photoPath = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHOTO_PATH))
+//            val moodIndex = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MOOD_INDEX))
+//            val note = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE))
+//            val dateRaw = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE))
+//            val time = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIME))
+//            val keterangan = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_KETERANGAN))
+//
+//            // Coba ubah format dari "13 Februari 2024" ke "2024-02-13"
+//            val dateConverted = try {
+//                dateFormatQuery.format(dateFormatDB.parse(dateRaw) ?: Date())
+//            } catch (e: Exception) {
+//                dateRaw // Kalau gagal, tetap pakai data asli
+//            }
+//
+//            // Hanya masukkan data dalam 30 hari terakhir
+//            if (dateConverted in pastDate..today) {
+//                historyList.add(HistoryItem(id, photoPath, note, moodIndex, dateConverted, time, keterangan))
+//            }
+//        }
+//
+//        cursor.close()
+//        db.close()
+//        return historyList
+//    }
+
+
+
     fun deleteHistoryItem(id: Long) {
         val db = writableDatabase
         db.delete(TABLE_HISTORY, "$COLUMN_ID = ?", arrayOf(id.toString()))

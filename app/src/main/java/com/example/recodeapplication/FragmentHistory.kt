@@ -41,7 +41,11 @@ class FragmentHistory : Fragment() {
 
         historyList = loadHistoryItems()
 
-        historyAdapter = HistoryAdapter(historyList)
+        historyAdapter = HistoryAdapter(historyList) { id ->
+            db.deleteHistoryItem(id)
+            historyList.removeIf { it.id == id }
+            historyAdapter.notifyDataSetChanged()
+        }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = historyAdapter

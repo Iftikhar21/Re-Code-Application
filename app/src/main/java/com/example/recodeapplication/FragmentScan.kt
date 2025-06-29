@@ -53,8 +53,8 @@ class FragmentScan : Fragment() {
     private lateinit var barcodeScanner: BarcodeScanner
     private lateinit var dbHelper: HistoryDB
     private val GEOFENCE_RADIUS = 100f
-    private val GEOFENCE_LATITUDE = -6.321943709730052
-    private val GEOFENCE_LONGITUDE =  106.89917848650674
+    private val GEOFENCE_LATITUDE = -6.342542684104285
+    private val GEOFENCE_LONGITUDE =  106.87059459999999
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,18 +86,6 @@ class FragmentScan : Fragment() {
             } else {
                 Toast.makeText(context, "Harus Izinkan", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        view.findViewById<Button>(R.id.btnIzin).setOnClickListener {
-            val intent = Intent(context, PhotoCaptureActivity::class.java)
-            intent.putExtra("keterangan", "Izin")
-            startActivity(intent)
-        }
-
-        view.findViewById<Button>(R.id.btnSakit).setOnClickListener {
-            val intent = Intent(context, PhotoCaptureActivity::class.java)
-            intent.putExtra("keterangan", "Sakit")
-            startActivity(intent)
         }
 
         requestPermissionLauncher.launch(
@@ -229,12 +217,24 @@ class FragmentScan : Fragment() {
     private fun handleBarcode(barcode: Barcode) {
         val url = barcode.url?.url ?: barcode.displayValue
         if (url != null) {
+            // Get the current time in "HH:mm" format
+            val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+
+            // Determine if it's after 6:30 AM
+            val keterangan = if (currentTime > "06:30") {
+                "Terlambat" // If after 6:30 AM, attendance is considered late
+            } else {
+                "Hadir" // If before 6:30 AM, attendance is on time
+            }
+
+            // Start the PhotoCaptureActivity with the appropriate keterangan
             val intent = Intent(context, PhotoCaptureActivity::class.java)
             intent.putExtra("qr_data", url)
-            intent.putExtra("keterangan", "Hadir")
+            intent.putExtra("keterangan", keterangan)
             startActivity(intent)
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

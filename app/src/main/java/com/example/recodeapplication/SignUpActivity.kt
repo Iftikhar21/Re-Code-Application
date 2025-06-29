@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -24,9 +25,9 @@ class SignUpActivity : AppCompatActivity() {
         buttonRegisa.setOnClickListener {
             val nisn = findViewById<EditText>(R.id.et_NISN).text.toString().trim()
             val nama = findViewById<EditText>(R.id.et_Nama).text.toString().trim()
-            val kelas = findViewById<EditText>(R.id.et_Kelas).text.toString().trim()
-            val jurusan = findViewById<EditText>(R.id.et_Jurusan).text.toString().trim()
-            val jenkel = findViewById<EditText>(R.id.et_Jenkel).text.toString().trim()
+            val kelas = findViewById<Spinner>(R.id.spinner_Kelas).selectedItem.toString().trim()
+            val jurusan = findViewById<Spinner>(R.id.spinner_Jurusan).selectedItem.toString().trim()
+            val jenkel = findViewById<Spinner>(R.id.spinner_Jenkel).selectedItem.toString().trim()
             val password = findViewById<EditText>(R.id.et_Pass).text.toString().trim()
 
             if (nisn.isEmpty() || nama.isEmpty() || kelas.isEmpty() || jurusan.isEmpty() || jenkel.isEmpty() || password.isEmpty()) {
