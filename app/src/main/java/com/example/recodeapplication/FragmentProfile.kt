@@ -172,8 +172,8 @@ class FragmentProfile : Fragment() {
     private fun displaySiswaData(view: View) {
         val siswaData = getSiswaDataFromDatabase()
         if (siswaData != null) {
-            val tvNama: TextView = view.findViewById(R.id.tvNama)
-            val tvNISN: TextView = view.findViewById(R.id.tvNISN)
+            val tvNama: TextView = view.findViewById(R.id.tvNisn)
+            val tvNISN: TextView = view.findViewById(R.id.tvNama)
             val tvKelas: TextView = view.findViewById(R.id.tvKelas)
             val tvKelasDua: TextView = view.findViewById(R.id.tvKelas_dua)
             val tvJurusan: TextView = view.findViewById(R.id.tvJurusan)

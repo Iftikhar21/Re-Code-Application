@@ -97,7 +97,7 @@ class FragmentHome : Fragment() {
         displayPhotos(viewPhoto)
 
         if (siswaData != null) {
-            val tvNama: TextView = view.findViewById(R.id.tvNama)
+            val tvNama: TextView = view.findViewById(R.id.tvNisn)
             val tvKelas: TextView = view.findViewById(R.id.tvKelas)
             val tvJurusan: TextView = view.findViewById(R.id.tvJurusan)
 

@@ -75,7 +75,7 @@
         android:paddingRight="20dp">
 
         <EditText
-            android:id="@+id/tvNama"
+            android:id="@+id/tvNisn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/input_design"
@@ -89,19 +89,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/tvNISN"
+            android:id="@+id/tvNama"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/input_design"
             android:ems="10"
             android:fontFamily="@font/inter_semibold"
-            android:hint="Username"
+            android:hint="Nama"
             android:inputType="text"
             android:paddingStart="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNama" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNisn" />
 
         <EditText
             android:id="@+id/Login_Pass"
@@ -116,7 +116,7 @@
             android:paddingStart="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNISN" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNama" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

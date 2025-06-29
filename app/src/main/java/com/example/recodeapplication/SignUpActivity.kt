@@ -3,6 +3,7 @@ package com.example.recodeapplication
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
@@ -19,16 +20,44 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         val buttonRegisa = findViewById<Button>(R.id.btnRegister)
+        val spinnerKelas = findViewById<Spinner>(R.id.spinner_Kelas)
+        val spinnerJurusan = findViewById<Spinner>(R.id.spinner_Jurusan)
+        val spinnerJenkel = findViewById<Spinner>(R.id.spinner_Jenkel)
+
+        val listKelas = listOf("X", "XI", "XII")
+        val listJurusan = listOf("RPL", "TKJ", "DKV", "OTKP")
+        val listJenkel = listOf("L", "P")
+
+        spinnerKelas.adapter = ArrayAdapter(
+            this, // atau requireContext() kalau di Fragment
+            android.R.layout.simple_spinner_dropdown_item,
+            listKelas
+        )
+
+        spinnerJurusan.adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            listJurusan
+        )
+
+        spinnerJenkel.adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            listJenkel
+        )
+
 
         dbHelper = DBHelper(this)
 
         buttonRegisa.setOnClickListener {
             val nisn = findViewById<EditText>(R.id.et_NISN).text.toString().trim()
             val nama = findViewById<EditText>(R.id.et_Nama).text.toString().trim()
-            val kelas = findViewById<Spinner>(R.id.spinner_Kelas).selectedItem.toString().trim()
-            val jurusan = findViewById<Spinner>(R.id.spinner_Jurusan).selectedItem.toString().trim()
-            val jenkel = findViewById<Spinner>(R.id.spinner_Jenkel).selectedItem.toString().trim()
+            val kelas = spinnerKelas.selectedItem.toString().trim()
+            val jurusan = spinnerJurusan.selectedItem.toString().trim()
+            val jenkel = spinnerJenkel.selectedItem.toString().trim()
             val password = findViewById<EditText>(R.id.et_Pass).text.toString().trim()
+
+
 
             if (nisn.isEmpty() || nama.isEmpty() || kelas.isEmpty() || jurusan.isEmpty() || jenkel.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
@@ -41,7 +70,7 @@ class SignUpActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "Sign-Up Successful!", Toast.LENGTH_SHORT).show()
 
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 } else {
 
