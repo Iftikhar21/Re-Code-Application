@@ -24,8 +24,8 @@ class LoginActivity : AppCompatActivity() {
 
         dbHelper = DBHelper(this)
 
-        val etNama = findViewById<EditText>(R.id.tvNisn)
-        val etNisn = findViewById<EditText>(R.id.tvNama)
+        val etNama = findViewById<EditText>(R.id.tvNama)
+        val etNisn = findViewById<EditText>(R.id.tvNisn)
         val etPassword = findViewById<EditText>(R.id.Login_Pass)
         val btnLogin = findViewById<Button>(R.id.buttonLogin)
 
