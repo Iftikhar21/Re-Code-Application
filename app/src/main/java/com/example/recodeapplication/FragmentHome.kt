@@ -120,7 +120,6 @@ class FragmentHome : Fragment() {
             db.deleteHistoryItem(id)
             historyList.removeIf { it.id == id }
             historyAdapter.notifyDataSetChanged()
-            // Update attendance status after deletion
             updateAttendanceStatus()
         }
 
@@ -143,22 +142,20 @@ class FragmentHome : Fragment() {
     }
 
     private fun updateAttendanceStatus() {
-        // Get today's date in the format "EEE, dd MMMM yyyy" to match your display format
-        val currentDate = SimpleDateFormat("EEE, dd MMMM yyyy", Locale.getDefault()).format(Date())
-        val hasAttendanceToday = hasAttendanceForDate(currentDate)
-        tvNoAttendance.visibility = if (hasAttendanceToday) View.GONE else View.VISIBLE
+        tvNoAttendance.visibility = if (historyList.isNotEmpty()) View.GONE else View.VISIBLE
     }
 
-    private fun hasAttendanceForDate(currentDate: String): Boolean {
-        return historyList.any { historyItem ->
-            // Compare the dates directly if they're in the same format
-            // Assuming historyItem.date is in the same format as currentDate
-            historyItem.date == currentDate
-        }
-    }
+//    private fun hasAttendanceForDate(currentDate: String): Boolean {
+//        return historyList.any { historyItem ->
+//            // Compare the dates directly if they're in the same format
+//            // Assuming historyItem.date is in the same format as currentDate
+//            historyItem.date == currentDate
+//        }
+//    }
 
     private fun loadHistoryItems(): MutableList<HistoryItem> {
-        return db.getAllHistory().toMutableList()
+        val currentDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date())
+        return db.getAllHistory().filter { it.date == currentDate }.toMutableList()
     }
 
     private fun displayPhotos(viewPhoto: ImageView) {
@@ -166,7 +163,7 @@ class FragmentHome : Fragment() {
         val photos = dbHelper.getAllPhotos()
 
         if (photos.isNotEmpty()) {
-            val firstPhotoUri = photos.last().uri // Menampilkan foto terbaru
+            val firstPhotoUri = photos.last().uri
             try {
                 viewPhoto.setImageURI(Uri.parse(firstPhotoUri))
             } catch (e: Exception) {
@@ -212,7 +209,7 @@ class FragmentHome : Fragment() {
                 val geocoder = Geocoder(requireContext(), Locale.getDefault())
                 val addresses = geocoder.getFromLocation(latitude, longitude, 1)
                 if (addresses != null && addresses.isNotEmpty()) {
-                    val address = addresses[0].getAddressLine(0) // Nama lokasi lengkap
+                    val address = addresses[0].getAddressLine(0)
                     tvLocation.text = "Lokasi: $address"
                 } else {
                     tvLocation.text = "Tidak dapat menemukan nama lokasi."

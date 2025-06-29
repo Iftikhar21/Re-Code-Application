@@ -1,16 +1,18 @@
 package com.example.recodeapplication
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class HistoryAdapter(
     private val historyList: MutableList<HistoryItem>,
-    private val deleteHistoryItem: (Long) -> Unit
+//    private val deleteHistoryItem: (Long) -> Unit
 ) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,7 +21,7 @@ class HistoryAdapter(
         val textEmail3: TextView = itemView.findViewById(R.id.textEmail3)
         val textPanggilan: TextView = itemView.findViewById(R.id.textPanggilan)
         val moodImage: ImageView = itemView.findViewById(R.id.imageView6)
-        val deleteBtn: ImageView = itemView.findViewById(R.id.deleteBtn)
+//        val deleteBtn: ImageView = itemView.findViewById(R.id.deleteBtn)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -32,7 +34,7 @@ class HistoryAdapter(
         val history = historyList[position]
 
         Glide.with(holder.itemView.context)
-                .load(history.photoPath)
+            .load(history.photoPath)
             .into(holder.fotoContainer)
 
         holder.textNama.text = "${history.date}, ${history.time}"
@@ -47,12 +49,17 @@ class HistoryAdapter(
         }
         holder.moodImage.setImageResource(moodEmoji)
 
-        holder.deleteBtn.setOnClickListener {
-            deleteHistoryItem(history.id)
-            notifyItemRemoved(position)
+        holder.fotoContainer.setOnClickListener {
+            val intent = Intent(holder.itemView.context, FullscreenImageActivity::class.java)
+            intent.putExtra("IMAGE_URL", history.photoPath)
+            holder.itemView.context.startActivity(intent)
         }
+
+//        holder.deleteBtn.setOnClickListener {
+//            deleteHistoryItem(history.id)
+//            notifyItemRemoved(position)
+//        }
     }
 
     override fun getItemCount(): Int = historyList.size
 }
-

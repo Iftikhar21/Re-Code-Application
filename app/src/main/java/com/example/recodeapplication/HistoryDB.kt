@@ -31,7 +31,7 @@ class HistoryDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         private const val COLUMN_NOTE = "note"
         private const val COLUMN_MOOD_INDEX = "mood_index"
         private const val COLUMN_DATE = "date"
-        private const val COLUMN_TIME = "time" // New column for time
+        private const val COLUMN_TIME = "time"
         private const val COLUMN_KETERANGAN = "keterangan"
     }
 
@@ -43,7 +43,7 @@ class HistoryDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
                 "$COLUMN_MOOD_INDEX INTEGER, " +
                 "$COLUMN_DATE TEXT, "+
                 "$COLUMN_TIME TEXT,"+
-                "$COLUMN_KETERANGAN TEXT)" // Added time column
+                "$COLUMN_KETERANGAN TEXT)"
         db.execSQL(createTableQuery)
     }
 
@@ -52,7 +52,6 @@ class HistoryDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         onCreate(db)
     }
 
-    // Insert history item
     fun insertHistoryItem(historyItem: HistoryItem): Long {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -60,8 +59,8 @@ class HistoryDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
             put(COLUMN_NOTE, historyItem.note)
             put(COLUMN_MOOD_INDEX, historyItem.moodIndex)
             put(COLUMN_DATE, historyItem.date)
-            put(COLUMN_TIME, historyItem.time) // Store the time
-            put(COLUMN_KETERANGAN, historyItem.keterangan) // Store keterangan
+            put(COLUMN_TIME, historyItem.time)
+            put(COLUMN_KETERANGAN, historyItem.keterangan)
         }
         return db.insert(TABLE_HISTORY, null, values)
     }
@@ -80,8 +79,8 @@ class HistoryDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
             val moodIndex = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MOOD_INDEX))
             val note = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE))
             val date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE))
-            val time = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIME)) // Fetch time
-            val keterangan = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_KETERANGAN)) // Fetch keterangan
+            val time = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIME))
+            val keterangan = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_KETERANGAN))
 
             historyList.add(HistoryItem(id, photoPath, note, moodIndex, date, time, keterangan))
         }

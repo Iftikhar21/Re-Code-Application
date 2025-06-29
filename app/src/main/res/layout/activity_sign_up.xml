@@ -9,7 +9,6 @@
     android:gravity="center"
     tools:context=".SignUpActivity">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -100,50 +99,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_NISN" />
 
-        <EditText
-            android:id="@+id/et_Kelas"
+        <Spinner
+            android:id="@+id/spinner_Kelas"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/input_design"
-            android:ems="10"
-            android:fontFamily="@font/inter_semibold"
-            android:hint="Kelas"
-            android:inputType="text"
-            android:paddingStart="30dp"
+            android:paddingStart="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_Nama" />
 
-        <EditText
-            android:id="@+id/et_Jurusan"
+        <Spinner
+            android:id="@+id/spinner_Jurusan"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/input_design"
-            android:ems="10"
-            android:fontFamily="@font/inter_semibold"
-            android:hint="Jurusan"
-            android:inputType="text"
-            android:paddingStart="30dp"
+            android:paddingStart="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_Kelas" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner_Kelas" />
 
-        <EditText
-            android:id="@+id/et_Jenkel"
+        <Spinner
+            android:id="@+id/spinner_Jenkel"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/input_design"
-            android:ems="10"
-            android:fontFamily="@font/inter_semibold"
-            android:hint="Jenis Kelamin"
-            android:inputType="text"
-            android:paddingStart="30dp"
+            android:paddingStart="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_Jurusan" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner_Jurusan" />
 
         <EditText
             android:id="@+id/et_Pass"
@@ -154,11 +141,11 @@
             android:ems="10"
             android:fontFamily="@font/inter_semibold"
             android:hint="Password"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:paddingStart="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_Jenkel" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner_Jenkel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -185,6 +172,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </RelativeLayout>
