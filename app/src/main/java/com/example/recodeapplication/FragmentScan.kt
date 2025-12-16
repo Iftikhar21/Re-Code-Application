@@ -53,9 +53,12 @@ class FragmentScan : Fragment() {
     private lateinit var barcodeScanner: BarcodeScanner
     private lateinit var dbHelper: HistoryDB
     private val GEOFENCE_RADIUS = 100f
-    private val GEOFENCE_LATITUDE = -6.342542684104285
-    private val GEOFENCE_LONGITUDE =  106.87059459999999
-
+    //Sekolah
+    private val GEOFENCE_LATITUDE = -6.321590876091488
+    private val GEOFENCE_LONGITUDE =  106.89969147899906
+    //Test
+//    private val GEOFENCE_LATITUDE = -6.3426730041437
+//    private val GEOFENCE_LONGITUDE =  106.8706074520171
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -83,6 +86,7 @@ class FragmentScan : Fragment() {
 
             if (cameraGranted && locationGranted) {
                 checkLocationAndStartCamera()
+//                startCamera()
             } else {
                 Toast.makeText(context, "Harus Izinkan", Toast.LENGTH_SHORT).show()
             }

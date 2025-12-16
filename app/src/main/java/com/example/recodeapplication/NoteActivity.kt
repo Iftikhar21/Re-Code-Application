@@ -154,7 +154,7 @@ class NoteActivity : AppCompatActivity() {
         catatan: String,
         mood: String
     ) {
-        val url = "https://backend24.site/Rian/XI/recode/absensi.php" // Ganti dengan URL PHP Anda
+        val url = "https://neoroza.com/recode/Api_Absensi_Recode/absensi.php" // Ganti dengan URL PHP Anda
         val client = okhttp3.OkHttpClient()
 
         // Data yang akan dikirim
